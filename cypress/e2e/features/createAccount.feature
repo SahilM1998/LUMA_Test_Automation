@@ -43,3 +43,17 @@ Feature: As a user i want to create an account on LUMA snd sign up
       | sahil      | mehta     | @gmail.com           | Valid@123        | Valid@123        | Email                     | Please enter a valid email address (Ex: johndoe@domain.com).                                                                                                 |
       | John       | Doe       | valid@example.com    | Valid@123        | Different123     | Confirm Password          | Please enter the same value again.                                                                                                                           |
       | John       | Doe       | toofankhan@gmail.com | Valid@123        | Valid@123        | Global Error              | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account. |
+
+     Scenario Outline: Forgot password on account already exists
+      Given User clicks on create account
+      Then User enters input field 'First Name' with <First Name>
+      And User enters input field 'Last Name' with <Last Name>
+      And User enters input field 'Email' with <Email>
+      And User enters input field 'Password' with <Password>
+      And User enters input field 'Confirm Password' with <Confirm Password>
+      Then User clicks on 'Create an account'
+      Then The error message for <Field to Check> should be <Expected Error Message>
+      Then User clicks on forgot password
+    Examples:
+      | First Name | Last Name | Email                 | Password         | Confirm Password | Field to Check            | Expected Error Message                                                                                                                  |
+      # | John       | Doe       | toofankhan@gmail.com | Valid@123        | Valid@123        | Global Error                     | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.                                                                                               |

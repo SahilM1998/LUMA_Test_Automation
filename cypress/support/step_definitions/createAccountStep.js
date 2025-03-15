@@ -15,3 +15,8 @@ Then('User should be logged in and see the success message', () => {
   cy.url().should('include', '/customer/account/');
   cy.get('.message-success').should('be.visible').and('contain.text', 'Thank you for registering with Main Website Store');
 });
+
+Given('User clicks on forgot password', () => {
+  cy.contains('a', 'click here').click();
+  cy.url().should('include', '/customer/account/forgotpassword/');
+});

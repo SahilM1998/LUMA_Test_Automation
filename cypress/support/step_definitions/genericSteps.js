@@ -25,7 +25,7 @@ Then(/^The error message for (.*) should be (.*)$/, (fieldNames, expectedMessage
   expectedMessages = expectedMessages ? expectedMessages.replace(/^['"]|['"]$/g, '') : '';
 
   const fields = fieldNames.split(',').map((field) => field.trim());
-  const messages = expectedMessages.split(']').map((msg) => msg.trim());
+  const messages = expectedMessages.split(':').map((msg) => msg.trim());
 
   if (fields.length !== messages.length) {
     throw new Error('Mismatch in number of fields and expected messages');
