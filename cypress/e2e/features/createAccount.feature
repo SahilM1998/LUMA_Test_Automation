@@ -2,9 +2,9 @@ Feature: As a user i want to create an account on LUMA snd sign up
 
   Background:
     Given User is on the LUMA Home page
+    Given User clicks on create account
 
   Scenario: Successful Create account with valid details
-    Given User clicks on create account
     Then User enters input field 'First Name' with <First Name>
     And User enters input field 'Last Name' with <Last Name>
     And User enters input field 'Email' with <Email>
@@ -19,7 +19,6 @@ Feature: As a user i want to create an account on LUMA snd sign up
       | sahil09872 | mehta09822 | sahil09872@example.com | Qwerty@09872 | Qwerty@09872     |
 
   Scenario Outline: Attempt to create an account with invalid data
-    Given User clicks on create account
     Then User enters input field 'First Name' with <First Name>
     And User enters input field 'Last Name' with <Last Name>
     And User enters input field 'Email' with <Email>
@@ -44,16 +43,24 @@ Feature: As a user i want to create an account on LUMA snd sign up
       | John       | Doe       | valid@example.com    | Valid@123        | Different123     | Confirm Password          | Please enter the same value again.                                                                                                                           |
       | John       | Doe       | toofankhan@gmail.com | Valid@123        | Valid@123        | Global Error              | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account. |
 
-     Scenario Outline: Forgot password on account already exists
-      Given User clicks on create account
-      Then User enters input field 'First Name' with <First Name>
-      And User enters input field 'Last Name' with <Last Name>
-      And User enters input field 'Email' with <Email>
-      And User enters input field 'Password' with <Password>
-      And User enters input field 'Confirm Password' with <Confirm Password>
-      Then User clicks on 'Create an account'
-      Then The error message for <Field to Check> should be <Expected Error Message>
-      Then User clicks on forgot password
+  Scenario Outline: Forgot password on account already exists
+    Then User enters input field 'First Name' with <First Name>
+    And User enters input field 'Last Name' with <Last Name>
+    And User enters input field 'Email' with <Email>
+    And User enters input field 'Password' with <Password>
+    And User enters input field 'Confirm Password' with <Confirm Password>
+    Then User clicks on 'Create an account'
+    Then The error message for <Field to Check> should be <Expected Error Message>
+    Then User clicks on forgot password
+
     Examples:
-      | First Name | Last Name | Email                 | Password         | Confirm Password | Field to Check            | Expected Error Message                                                                                                                  |
-      # | John       | Doe       | toofankhan@gmail.com | Valid@123        | Valid@123        | Global Error                     | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.                                                                                               |
+      | First Name | Last Name | Email                | Password  | Confirm Password | Field to Check | Expected Error Message                                                                                                                                       |
+      | John       | Doe       | toofankhan@gmail.com | Valid@123 | Valid@123        | Global Error   | There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account. |
+
+  Scenario: Validate all links are working and navigate correctly
+    Then All links should return a valid status code
+    Then All links should navigate to the correct URL
+
+    Examples:
+      | Name |
+      |  123 |

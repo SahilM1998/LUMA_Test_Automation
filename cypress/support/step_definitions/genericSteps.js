@@ -36,4 +36,43 @@ Then(/^The error message for (.*) should be (.*)$/, (fieldNames, expectedMessage
   });
 });
 
+Then('All links should return a valid status code', () => {
+  cy.get('a').each(($el) => {
+    const href = $el.attr('href');
+
+    if (href && href.startsWith('https://magento.softwaretestingboard.com/')) {
+      cy.request(href).then((response) => {
+        expect(response.status).to.be.oneOf([200, 301, 302]);
+      });
+    }
+  });
+});
+
+Then('All links should navigate to the correct URL', () => {
+  cy.get('a').then(($links) => {
+    const hrefs = [];
+    $links.each((index, el) => {
+      const href = Cypress.$(el).attr('href');
+      if (href && href.startsWith('https://magento.softwaretestingboard.com/')) {
+        hrefs.push(href);
+      }
+    });
+    console.log(`Total links to check: ${hrefs}`);
+
+    const normalizeUrl = (url) => (url.endsWith('/') ? url.slice(0, -1) : url);
+
+    cy.wrap(hrefs).each((href) => {
+      cy.visit(href);
+
+      cy.location('href').then((currentUrl) => {
+        const normalizedCurrent = normalizeUrl(currentUrl);
+        const normalizedExpected = normalizeUrl(href);
+        expect(normalizedCurrent).to.eq(normalizedExpected);
+      });
+
+      cy.go('back');
+    });
+  });
+});
+
 export default GenericSteps;
