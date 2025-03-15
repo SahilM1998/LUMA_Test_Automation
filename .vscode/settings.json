@@ -1,0 +1,11 @@
+{
+    "cucumberautocomplete.steps": ["cypress/support/step_definitions/*.js"],
+    "cucumberautocomplete.syncfeatures": "cypress/e2e/features/*.feature",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[feature]": {
+        "editor.defaultFormatter": "alexkrechik.cucumberautocomplete"
+    }
+}

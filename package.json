@@ -1,0 +1,25 @@
+{
+  "name": "taskincubyte",
+  "version": "1.0.0",
+  "description": "Automate creating an account on the website https://magento.softwaretestingboard.com/ and signing in with that account",
+  "main": "index.js",
+  "module": "type",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "keywords": [
+    "Cypress",
+    "BDD"
+  ],
+  "author": "sahil mehta",
+  "license": "ISC",
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "cypress": "^14.2.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "esbuild": "^0.25.1",
+    "webpack": "^5.88.2",
+    "@cypress/webpack-preprocessor": "^5.17.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
