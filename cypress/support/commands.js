@@ -1,67 +1,44 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-import pageMapping  from './mapping/pageMapping.js';
+import pageMapping from './mapping/pageMapping.js';
 
 function getSelectorFromPageMapping(pageName, field) {
-    console.log("🔹 Page Name:", pageName);
-    console.log("🔹 Field Name:", field);
-    console.log("🔹 Full Page Mapping:", pageMapping);
+  const page = pageMapping[pageName];
 
-    const page = pageMapping[pageName];
-    
-    if (!page) {
-        console.error(`❌ Page mapping not found for: ${pageName}`);
-        return null;
-    }
+  if (!page) {
+    return null;
+  }
 
-    console.log("✅ Page Object Found:", page);
+  if (!(field in page)) {
+    return null;
+  }
 
-    if (!(field in page)) {
-        console.error(`❌ Selector not found for field: "${field}" in page: ${pageName}`);
-        console.log("✅ Available fields:", Object.keys(page));  // Show available fields
-        return null;
-    }
+  const idSelector = page[field];
 
-    const idSelector = page[field];
-
-    console.log("✅ Returning Selector:", idSelector);
-    return idSelector;
+  return idSelector;
 }
 
+function getErrorSelectorFromPageMapping(pageName, fieldName) {
+  let fieldSelector = getSelectorFromPageMapping(pageName, fieldName);
+  fieldSelector = fieldName === 'Global Error' ? fieldSelector : fieldSelector + '-error';
+  return fieldSelector;
+}
 
+export { getErrorSelectorFromPageMapping };
 
-
-Cypress.Commands.add('InputField', (fieldName, fieldValue, pageName)=>{
-    const idSelector = getSelectorFromPageMapping(pageName,fieldName);
-    console.log(idSelector);
+Cypress.Commands.add('InputField', (fieldName, fieldValue, pageName) => {
+  const idSelector = getSelectorFromPageMapping(pageName, fieldName);
+  if (fieldValue === '') {
+    cy.get(idSelector).clear();
+  } else {
     cy.get(idSelector).type(fieldValue);
+  }
 });
 
-Cypress.Commands.add('Button', (button, pageName)=>{
-    const idSelector = getSelectorFromPageMapping(pageName,button);
-    cy.get(idSelector).click();
+Cypress.Commands.add('Button', (button, pageName) => {
+  const idSelector = getSelectorFromPageMapping(pageName, button);
+  cy.get(idSelector).click();
+});
+
+Cypress.Commands.add('Error', (fieldName, expectedMessage, pageName) => {
+  const errorSelector = getErrorSelectorFromPageMapping(pageName, fieldName);
+  cy.get(errorSelector).should('be.visible').and('contain.text', expectedMessage);
 });

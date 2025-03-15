@@ -1,7 +1,7 @@
-import CreateAccountMap from "./createAccountMapping.js";
+import CreateAccountMap from './createAccountMapping.js';
 
 const pageMapping = {
-    CreateAccountPage : CreateAccountMap
-}
+  CreateAccountPage: CreateAccountMap,
+};
 
-export default pageMapping
+export default pageMapping;
