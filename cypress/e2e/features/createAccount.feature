@@ -14,9 +14,9 @@ Feature: As a user i want to create an account on LUMA snd sign up
     Then User should be logged in and see the success message
 
     Examples:
-      | First Name | Last Name  | Email                  | Password     | Confirm Password |
-      | sahil0987  | mehta0987  | sahil0987@example.com  | Qwerty@0987  | Qwerty@0987      |
-      | sahil09872 | mehta09822 | sahil09872@example.com | Qwerty@09872 | Qwerty@09872     |
+      | First Name | Last Name  | Email   | Password     | Confirm Password |
+      | sahil0987  | mehta0987  | DYNAMIC | Qwerty@0987  | Qwerty@0987      |
+      | sahil09872 | mehta09822 | DYNAMIC | Qwerty@09872 | Qwerty@09872     |
 
   Scenario Outline: Attempt to create an account with invalid data
     Then User enters input field 'First Name' with <First Name>
@@ -36,7 +36,7 @@ Feature: As a user i want to create an account on LUMA snd sign up
       |            | mehta     | valid@example.com    | Valid@123        | Valid@123        | First Name                | This is a required field.                                                                                                                                    |
       | sahil      |           | valid@example.com    | Valid@123        | Valid@123        | Last Name                 | This is a required field.                                                                                                                                    |
       | sahil      | mehta     |                      | Valid@123        | Valid@123        | Email                     | This is a required field.                                                                                                                                    |
-      | sahil      | mehta     | valid@example.com    |                  | Valid@123        | Password,Confirm Password | This is a required field., Please enter the same value again.                                                                                                |
+      | sahil      | mehta     | valid@example.com    |                  | Valid@123        | Password,Confirm Password | This is a required field.-Please enter the same value again.                                                                                                 |
       | sahil      | mehta     | valid@example.com    | Valid@123        |                  | Confirm Password          | This is a required field.                                                                                                                                    |
       | sahil      | mehta     | invalidEmail         | Valid@123        | Valid@123        | Email                     | Please enter a valid email address (Ex: johndoe@domain.com).                                                                                                 |
       | sahil      | mehta     | @gmail.com           | Valid@123        | Valid@123        | Email                     | Please enter a valid email address (Ex: johndoe@domain.com).                                                                                                 |
@@ -62,5 +62,5 @@ Feature: As a user i want to create an account on LUMA snd sign up
     Then All links should navigate to the correct URL
 
     Examples:
-      | Name |
-      |  123 |
+      |  |
+      |  |

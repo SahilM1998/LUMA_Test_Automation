@@ -10,8 +10,16 @@ class GenericSteps {
   }
 }
 
+function generateDynamicEmail(email) {
+  const [localPart, domain] = email.split('@');
+  return `${localPart}_${Date.now()}@${domain}`;
+}
+
 Then(/^User enters input field (.*) with (.*)$/, (fieldName, fieldValue) => {
   [fieldName, fieldValue] = [fieldName, fieldValue].map((value) => (value ? value.replace(/^['"]|['"]$/g, '') : value));
+  if (fieldName.toLowerCase() === 'email' && fieldValue === 'DYNAMIC') {
+    fieldValue = generateDynamicEmail('testuser@example.com');
+  }
   cy.InputField(fieldName, fieldValue, pageContext.pageName);
 });
 
@@ -25,7 +33,7 @@ Then(/^The error message for (.*) should be (.*)$/, (fieldNames, expectedMessage
   expectedMessages = expectedMessages ? expectedMessages.replace(/^['"]|['"]$/g, '') : '';
 
   const fields = fieldNames.split(',').map((field) => field.trim());
-  const messages = expectedMessages.split(':').map((msg) => msg.trim());
+  const messages = expectedMessages.split('-').map((msg) => msg.trim());
 
   if (fields.length !== messages.length) {
     throw new Error('Mismatch in number of fields and expected messages');
