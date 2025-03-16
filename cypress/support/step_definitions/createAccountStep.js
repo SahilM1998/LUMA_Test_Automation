@@ -2,6 +2,7 @@ import { Given, Then } from '@badeball/cypress-cucumber-preprocessor';
 import GenericSteps from './genericSteps.js';
 const PAGENAME = 'CreateAccountPage';
 const genericSteps = new GenericSteps(PAGENAME);
+let failingResponses = [];
 
 Given('User is on the LUMA Home page', () => {
   cy.visit('https://magento.softwaretestingboard.com/');
@@ -43,4 +44,22 @@ Then('I should see {string} inside the footer', (expectedText) => {
 
 Then('The cart option should be visible', () => {
   cy.get('a.action.showcart').should('be.visible').and('contain.text', 'My Cart');
+});
+
+Given('I intercept all network calls to the domain', () => {
+  const domain = 'https://magento.softwaretestingboard.com'
+  failingResponses = [];
+  cy.intercept(domain + '/**', (req) => {
+    req.continue((res) => {
+      if (res.statusCode >= 400) {
+        failingResponses.push({ url: req.url, status: res.statusCode });
+        cy.log(`Error: ${req.url} returned ${res.statusCode}`);
+      }
+    });
+  }).as('networkCalls');
+});
+
+Then('No network call should return a status code of 400 or 500', () => {
+  cy.log(`Failing responses: ${JSON.stringify(failingResponses)}`);
+  expect(failingResponses, 'No failing network calls').to.have.length(0);
 });
