@@ -64,3 +64,29 @@ Feature: As a user i want to create an account on LUMA snd sign up
     Examples:
       |  |
       |  |
+
+  Scenario: Verify Fields and Texts are Visible
+    Then The search field should be visible with placeholder "Search entire store here..."
+    And The store logo should be visible
+    And I should see 'Create New Customer Account' inside the main container
+    And I should see 'Personal Information' inside the main container
+    And I should see 'First Name' inside the main container
+    And I should see 'Last Name' inside the main container
+    And I should see 'Sign-in Information' inside the main container
+    And I should see 'Email' inside the main container
+    And I should see 'Password' inside the main container
+    And I should see 'Confirm Password' inside the main container
+    And I should see 'Notes' inside the footer
+    And I should see 'Practice API Testing using Magento 2' inside the footer
+    And I should see 'Write for us' inside the footer
+    And I should see 'Subscribe' inside the footer
+    And I should see 'Search Terms' inside the footer
+    And I should see 'Privacy and Cookie Policy' inside the footer
+    And I should see 'Advanced Search' inside the footer
+    And I should see 'Orders and Returns' inside the footer
+    And The cart option should be visible
+    And The copyright text should be "We know you have an assignment to complete. If this site is not functioning as expected, drop us an email. Copyright © 2013-present Magento, Inc. All rights reserved."
+
+    Examples:
+      |  |
+      |  |
