@@ -6,7 +6,7 @@ export default defineConfig({
   e2e: {
     specPattern: 'cypress/e2e/**/*.feature',
     supportFile: false,
-    stepDefinitions: "cypress/support/step_definitions/**/*.js", 
+    stepDefinitions: 'cypress/support/step_definitions/**/*.js',
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config);
 
@@ -35,12 +35,12 @@ export default defineConfig({
 
       return config;
     },
-    reporter: "mochawesome",
+    reporter: 'mochawesome',
     reporterOptions: {
-      reportDir: "cypress/reports",
+      reportDir: 'cypress/reports',
       overwrite: true,
       html: true,
-      json: true
+      json: true,
     },
   },
 });

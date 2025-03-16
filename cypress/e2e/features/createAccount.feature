@@ -64,9 +64,10 @@ Feature: As a user i want to create an account on LUMA snd sign up
     Examples:
       |  |
       |  |
+# This case can be enhance
 
   Scenario: Verify Fields and Texts are Visible
-    Then The search field should be visible with placeholder "Search entire store here..."
+    Then The search field should be visible with placeholder 'Search entire store here...'
     And The store logo should be visible
     And I should see 'Create New Customer Account' inside the main container
     And I should see 'Personal Information' inside the main container
@@ -85,7 +86,7 @@ Feature: As a user i want to create an account on LUMA snd sign up
     And I should see 'Advanced Search' inside the footer
     And I should see 'Orders and Returns' inside the footer
     And The cart option should be visible
-    And The copyright text should be "We know you have an assignment to complete. If this site is not functioning as expected, drop us an email. Copyright © 2013-present Magento, Inc. All rights reserved."
+    And The copyright text should be 'We know you have an assignment to complete. If this site is not functioning as expected, drop us an email. Copyright © 2013-present Magento, Inc. All rights reserved.'
 
     Examples:
       |  |
