@@ -50,13 +50,13 @@ Given('I intercept all network calls to the domain', () => {
   const domain = 'https://magento.softwaretestingboard.com'
   failingResponses = [];
   cy.intercept(domain + '/**', (req) => {
-    req.continue((res) => {
+    req.reply((res) => {
       if (res.statusCode >= 400) {
         failingResponses.push({ url: req.url, status: res.statusCode });
         cy.log(`Error: ${req.url} returned ${res.statusCode}`);
       }
     });
-  }).as('networkCalls');
+  }).as('apiCalls');
 });
 
 Then('No network call should return a status code of 400 or 500', () => {

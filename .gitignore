@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 reports
 !reports/.gitkeep
+screenshots
+!screenshots/.gitkeep

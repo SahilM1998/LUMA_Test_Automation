@@ -1,6 +1,7 @@
 Feature: As a user i want to create an account on LUMA snd sign up
 
   Background:
+    Given I intercept all network calls to the domain
     Given User is on the LUMA Home page
     Given User clicks on create account
 
@@ -91,12 +92,11 @@ Feature: As a user i want to create an account on LUMA snd sign up
     Examples:
       |  |
       |  |
+# Should be present in different api folder
 
-Scenario: All network calls on the domain should not return error status codes
-    Given I intercept all network calls to the domain
-    When User clicks on create account
+  Scenario: All network calls on the domain should not return error status codes
     Then No network call should return a status code of 400 or 500
 
     Examples:
-    ||
-    ||
+      |  |
+      |  |
